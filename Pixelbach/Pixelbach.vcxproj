@@ -79,9 +79,7 @@
     <Text Include="gpio.txt" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="C:\Users\Lenny\Source\Repos\CamelCaseName\Pixelbach\.gitignore" />
-    <None Include="C:\Users\Lenny\Source\Repos\CamelCaseName\Pixelbach\LICENSE" />
-    <None Include="C:\Users\Lenny\Source\Repos\CamelCaseName\Pixelbach\README.md" />
+    <None Include="..\.gitignore" />
   </ItemGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
     <Link>
