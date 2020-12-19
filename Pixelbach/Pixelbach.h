@@ -94,12 +94,6 @@
 //default memory page size
 #define PAGE_SIZE 4096
 
-//offsets to the gpio function select registers, set to 1 for gpio use
-//each register is 3 bits wide
-#define GPIO_FSEL_0TO9_OFFSET   0x0 //0xFE200000 
-#define GPIO_FSEL_10TO19_OFFSET 0x4 //0xFE200004 
-#define GPIO_FSEL_20TO29_OFFSET 0x8 //0xFE200008 
-
 class Timer {
 private:
 	// Type aliases to make accessing nested type easier
