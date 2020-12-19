@@ -1,8 +1,7 @@
 #pragma once
 
-#ifndef Pixelbach
-#define Pixelbach
-
+#ifndef Pixelbach_h
+#define Pixelbach_h
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -94,27 +93,6 @@
 //default memory page size
 #define PAGE_SIZE 4096
 
-class Timer {
-private:
-	// Type aliases to make accessing nested type easier
-	using clock_t = std::chrono::high_resolution_clock;
-	using second_t = std::chrono::duration<double, std::ratio<1> >;
-
-	std::chrono::time_point<clock_t> m_beg;
-
-public:
-	Timer() : m_beg(clock_t::now()) {
-	}
-
-	void reset() {
-		m_beg = clock_t::now();
-	}
-
-	double elapsed() const {
-		return std::chrono::duration_cast<second_t>(clock_t::now() - m_beg).count();
-	}
-};
-
 //PixelBachPI
 class Pixelbach {
 	public:
@@ -124,15 +102,13 @@ class Pixelbach {
 	private:
 		volatile uint32_t buffer[24576];
 		uint8_t row = 0;
-		Timer t;
 		volatile uint32_t* gpio_reg = NULL;
 		volatile uint32_t* set_reg = NULL;
 		volatile uint32_t* clr_reg = NULL;
-		static uint32_t* mmap_bcm_register(off_t register_offset);
-		void my_handler(sig_atomic_t s);
 		void initialize_gpio_for_output(volatile uint32_t* gpio_registerset, int bit);
 		int init_drawFast();
 		void drawFast();
+		int main();
 };
 
 #endif

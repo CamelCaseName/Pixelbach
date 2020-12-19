@@ -20,13 +20,12 @@ uint32_t B2_Lo_MASK = (1 << B2_Lo);
 
 volatile uint32_t buffer[24576];
 uint8_t row = 0;
-Timer t;
 volatile uint32_t* gpio_reg = NULL;
 volatile uint32_t* set_reg = NULL;
 volatile uint32_t* clr_reg = NULL;
 
 // Return a pointer to a periphery subsystem register.
-static uint32_t* Pixelbach::mmap_bcm_register(off_t register_offset) {
+static uint32_t* mmap_bcm_register(off_t register_offset) {
     const off_t base = PERI_BASE;
 
     int mem_fd;
@@ -54,7 +53,7 @@ static uint32_t* Pixelbach::mmap_bcm_register(off_t register_offset) {
 }
 
 //exit function
-void Pixelbach::my_handler(sig_atomic_t s) {
+void my_handler(sig_atomic_t s) {
     *clr_reg = -1;
     abort();
 }
@@ -191,3 +190,5 @@ int Pixelbach::init() {
         drawFast();
     }
 }
+
+int main() {}
