@@ -96,9 +96,9 @@
 //PixelBachPI
 class Pixelbach {
 	public:
-		int init();
 		uint32_t* retBA();
 		inline int fullToHighColor(int r, int g, int b);
+		Pixelbach();
 	private:
 		volatile uint32_t buffer[24576];
 		uint8_t row = 0;
@@ -108,7 +108,7 @@ class Pixelbach {
 		void initialize_gpio_for_output(volatile uint32_t* gpio_registerset, int bit);
 		int init_drawFast();
 		void drawFast();
-		int main();
+		int main(); 
 };
 
 #endif

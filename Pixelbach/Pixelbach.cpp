@@ -167,8 +167,12 @@ uint32_t* Pixelbach::retBA() {
     return (uint32_t*)buffer;
 }
 
+int Pixelbach::main() {
+    return 0;
+}
+
 //initializes everything, must be called before everything else
-int Pixelbach::init() {
+Pixelbach::Pixelbach() {
     signal(SIGINT, my_handler);
 
     if (init_drawFast()) std::cout << "init done" << std::endl;
@@ -190,5 +194,3 @@ int Pixelbach::init() {
         drawFast();
     }
 }
-
-int Pixelbach::main() {}
