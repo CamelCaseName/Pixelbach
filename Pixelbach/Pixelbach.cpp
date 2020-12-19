@@ -191,4 +191,4 @@ int Pixelbach::init() {
     }
 }
 
-int main() {}
+int Pixelbach::main() {}
