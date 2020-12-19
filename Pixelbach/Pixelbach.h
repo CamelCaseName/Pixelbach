@@ -99,6 +99,7 @@ class Pixelbach {
 		uint32_t* retBA();
 		inline int fullToHighColor(int r, int g, int b);
 		Pixelbach();
+		void start();
 	private:
 		volatile uint32_t buffer[24576];
 		uint8_t row = 0;

@@ -129,13 +129,13 @@ void Pixelbach::drawFast() {
             if (((*(it + 0)) & GMASK >> 5) & i) *set_reg = G1_Up_MASK;
             else *clr_reg = G1_Up_MASK;
 
-            if (((*(it + 0)) & GMASK >> 5) & i) *set_reg = G2_Up_MASK;
+            if (((*(it + 6144)) & GMASK >> 5) & i) *set_reg = G2_Up_MASK;
             else *clr_reg = G2_Up_MASK;
 
-            if (((*(it + 0)) & GMASK >> 5) & i) *set_reg = G1_Lo_MASK;
+            if (((*(it + 1228)) & GMASK >> 5) & i) *set_reg = G1_Lo_MASK;
             else *clr_reg = G1_Lo_MASK;
 
-            if (((*(it + 0)) & GMASK >> 5) & i) *set_reg = G2_Lo_MASK;
+            if (((*(it + 18432)) & GMASK >> 5) & i) *set_reg = G2_Lo_MASK;
             else *clr_reg = G2_Lo_MASK;
 
             //blue
@@ -183,14 +183,11 @@ Pixelbach::Pixelbach() {
     *clr_reg = -1;
 
     std::cout << "cleared all 32 pins" << std::endl;
+}
 
-    //fill buffer with only red
-    for (uint16_t j = 0; j < 24576; j++) {
-        buffer[j] = 0xFFFF;
-    }
-
+void Pixelbach::start() {
     std::cout << "displaying buffer till ended" << std::endl;
-    while(true) {
+    while (true) {
         drawFast();
     }
 }
