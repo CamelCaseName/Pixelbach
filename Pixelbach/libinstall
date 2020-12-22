@@ -1,0 +1,7 @@
+#!/bin/bash
+
+sudo cp /home/pi/projects/Pixelbach/Pixelbach/bin/ARM/Release/libPixelbach.so /usr/lib
+sudo cp /home/pi/projects/Pixelbach/Pixelbach/bin/ARM/Release/libPixelbach.so /usr/local/lib
+sudo cp /home/pi/projects/Pixelbach/Pixelbach/Pixelbach.h /usr/local/include
+sudo cp /home/pi/projects/Pixelbach/Pixelbach/Pixelbach.h /usr/include
+sudo  ldconfig --verbose
