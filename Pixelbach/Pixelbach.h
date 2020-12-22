@@ -93,15 +93,15 @@
 //default memory page size
 #define PAGE_SIZE 4096
 
-//PixelBachPI
+//Pixelbach
 class Pixelbach {
 	public:
 		uint32_t* retBA();
-		inline int fullToHighColor(int r, int g, int b);
+		inline uint32_t fullToHighColor(int r, int g, int b);
 		Pixelbach();
 		void start();
-	private:
-		volatile uint32_t buffer[24576];
+		void setPixel(int x, int y, int r, int g, int b);
+		volatile uint32_t* buffer;
 		uint8_t row = 0;
 		volatile uint32_t* gpio_reg = NULL;
 		volatile uint32_t* set_reg = NULL;
@@ -109,7 +109,6 @@ class Pixelbach {
 		void initialize_gpio_for_output(volatile uint32_t* gpio_registerset, int bit);
 		int init_drawFast();
 		void drawFast();
-		int main(); 
 };
 
 #endif

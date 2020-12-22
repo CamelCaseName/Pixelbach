@@ -87,6 +87,9 @@
   <ItemGroup>
     <ClInclude Include="Pixelbach.h" />
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="libinstall" />
+  </ItemGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
     <Link>
       <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
