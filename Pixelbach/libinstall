@@ -4,4 +4,5 @@ sudo cp /home/pi/projects/Pixelbach/Pixelbach/bin/ARM/Release/libPixelbach.so /u
 sudo cp /home/pi/projects/Pixelbach/Pixelbach/bin/ARM/Release/libPixelbach.so /usr/local/lib
 sudo cp /home/pi/projects/Pixelbach/Pixelbach/Pixelbach.h /usr/local/include
 sudo cp /home/pi/projects/Pixelbach/Pixelbach/Pixelbach.h /usr/include
-sudo  ldconfig --verbose
+sudo  ldconfig 
+echo done;

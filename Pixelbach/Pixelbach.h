@@ -20,6 +20,7 @@
 #include <unistd.h>
 #include <bitset>
 #include <fstream>
+#include "Pixelbach.h"
 
 /*
 *
@@ -98,9 +99,11 @@ class Pixelbach {
 	public:
 		uint32_t* retBA();
 		inline uint32_t fullToHighColor(int r, int g, int b);
-		Pixelbach();
+		Pixelbach(int arg);
 		void start();
-		void setPixel(int x, int y, int r, int g, int b);
+		void setPixel(int x, int y, int r, int g, int b); 
+		int getPixel(int x, int y);
+	private:
 		volatile uint32_t* buffer;
 		uint8_t row = 0;
 		volatile uint32_t* gpio_reg = NULL;
@@ -109,6 +112,7 @@ class Pixelbach {
 		void initialize_gpio_for_output(volatile uint32_t* gpio_registerset, int bit);
 		int init_drawFast();
 		void drawFast();
+		//int main();
 };
 
 #endif

@@ -172,7 +172,7 @@ void Pixelbach::drawFast() {
 			//clock in data
 			*set_reg = CLK_MASK;
 			//budget timer™
-			for (uint8_t timedel = 0; timedel < 31; timedel++) {
+			for (uint8_t timedel = 0; timedel < 32; timedel++) {
 				__asm__("nop");
 			}
 			*clr_reg = CLK_MASK;
@@ -185,15 +185,16 @@ uint32_t* Pixelbach::retBA() {
 	//std::cout << (uint32_t*)buffer << std::endl;
 	return (uint32_t*)buffer;
 }
-
+/*
 int main() {
-	Pixelbach pixie;
+	Pixelbach pixie(1);
 	pixie.start();
 	return 0;
 }
+*/
 
 //initializes everything, must be called before everything else
-Pixelbach::Pixelbach() {
+Pixelbach::Pixelbach(int arg) {
 
 	buffer = (uint32_t*)calloc(30000, sizeof(uint32_t));
 
@@ -213,11 +214,86 @@ Pixelbach::Pixelbach() {
 			*(buffer + i + j) = ((row & 31) << 11) + ((row & 31) << 5) + (row & 31);
 		}
 	}
-	std::cout << "\e0;32m everythings ready" << std::endl;
+	std::cout << "everythings ready\n\n" << std::endl;
 }
 
 void Pixelbach::setPixel(int x, int y, int r, int g, int b) {
-	*(buffer + x + (y * 384) * (y < 16) + (y * 192) * (y > 15)) = fullToHighColor(r, g, b);
+
+	//die ersten 6144 pixel sind für reihen 0-15 und 32-47
+	//die pixel von 6144 bis 12287 sind für reihen 16-31 und 48-63
+	if (x < 192) {
+		if (y < 16) {
+			*(buffer + x + (y * 384)) = fullToHighColor(r, g, b);
+		}
+		else if (y < 32) {
+			y -= 16;
+			*(buffer + x + 6144 + (y * 384)) = fullToHighColor(r, g, b);
+		}
+		else if (y < 48) {
+			y -= 32;
+			*(buffer + x + 192 + (y * 384)) = fullToHighColor(r, g, b);
+		}
+		else if (y < 64) {
+			y -= 48;
+			*(buffer + x + 6336 + (y * 384)) = fullToHighColor(r, g, b);
+		}
+		else if (y < 80) {
+			y -= 64;
+			*(buffer + x + 12288 + (y * 384)) = fullToHighColor(r, g, b);
+		}
+		else if (y < 96) {
+			y -= 80;
+			*(buffer + x + 18432 + (y * 384)) = fullToHighColor(r, g, b);
+		}
+		else if (y < 112) {
+			y -= 96;
+			*(buffer + x + 12480 + (y * 384)) = fullToHighColor(r, g, b);
+		}
+		else if (y < 128) {
+			y -= 112;
+			*(buffer + x + 18624 + (y * 384)) = fullToHighColor(r, g, b);
+		}
+	}
+}
+
+//returns the pixel data from a given pixel
+int Pixelbach::getPixel(int x, int y) {
+
+	//die ersten 6144 pixel sind für reihen 0-15 und 32-47
+	//die pixel von 6144 bis 12287 sind für reihen 16-31 und 48-63
+	if (x < 192) {
+		if (y < 16) {
+			return *(buffer + x + (y * 384));
+		}
+		else if (y < 32) {
+			y -= 16;
+			return *(buffer + x + 6144 + (y * 384));
+		}
+		else if (y < 48) {
+			y -= 32;
+			return *(buffer + x + 192 + (y * 384));
+		}
+		else if (y < 64) {
+			y -= 48;
+			return *(buffer + x + 6336 + (y * 384));
+		}
+		else if (y < 80) {
+			y -= 64;
+			return *(buffer + x + 12288 + (y * 384));
+		}
+		else if (y < 96) {
+			y -= 80;
+			return *(buffer + x + 18432 + (y * 384));
+		}
+		else if (y < 112) {
+			y -= 96;
+			return *(buffer + x + 12480 + (y * 384));
+		}
+		else if (y < 128) {
+			y -= 112;
+			return *(buffer + x + 18624 + (y * 384));
+		}
+	}
 }
 
 void Pixelbach::start() {
