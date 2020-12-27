@@ -102,6 +102,7 @@ class Pixelbach {
 		Pixelbach(int arg);
 		void start();
 		void setPixel(int x, int y, int r, int g, int b); 
+		void setPixelAlpha(int x, int y, int r, int g, int b, double a);
 		int getPixel(int x, int y);
 	private:
 		volatile uint32_t* buffer;
