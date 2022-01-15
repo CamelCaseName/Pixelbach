@@ -54,9 +54,10 @@ static uint32_t* mmap_bcm_register(off_t register_offset) {
 
 //exit function
 void my_handler(sig_atomic_t s) {
+	printf("signal handler caught");
 	free((void*)buffer);
 	*clr_reg = -1;
-	abort();
+	exit(0);
 }
 
 //initialise gpio register? for output
@@ -87,6 +88,7 @@ int Pixelbach::init_drawFast() {
 	clr_reg = gpio_port + (GPIO_CLR_OFFSET / sizeof(uint32_t));
 
 	if (!errno) return 1;
+	else return 0;
 }
 
 //makes led go colorful
@@ -172,7 +174,7 @@ void Pixelbach::drawFast() {
 			//clock in data
 			*set_reg = CLK_MASK;
 			//budget timer™
-			for (uint8_t timedel = 0; timedel < 32; timedel++) {
+			for (uint8_t timedel = 0; timedel < 28; timedel++) {
 				__asm__("nop");
 			}
 			*clr_reg = CLK_MASK;
@@ -182,7 +184,6 @@ void Pixelbach::drawFast() {
 
 //returns the adress of the mapped buffer for other software to write to
 uint32_t* Pixelbach::retBA() {
-	//std::cout << (uint32_t*)buffer << std::endl;
 	return (uint32_t*)buffer;
 }
 /*
@@ -198,7 +199,13 @@ Pixelbach::Pixelbach(int arg) {
 
 	buffer = (uint32_t*)calloc(30000, sizeof(uint32_t));
 
-	signal(SIGINT, my_handler);
+	struct sigaction sigIntHandler;
+
+	sigIntHandler.sa_handler = my_handler;
+	sigemptyset(&sigIntHandler.sa_mask);
+	sigIntHandler.sa_flags = 0;
+
+	sigaction(SIGINT, &sigIntHandler, NULL);
 
 	if (init_drawFast()) std::cout << "init done" << std::endl;
 	else abort();
@@ -334,7 +341,10 @@ int Pixelbach::getPixel(int x, int y) {
 			return *(buffer + x + 18624 + (y * 384));
 		}
 	}
+
+	return 0;
 }
+
 
 void Pixelbach::start() {
 	std::cout << "displaying buffer till ended" << std::endl;
